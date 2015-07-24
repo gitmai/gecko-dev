@@ -66,6 +66,39 @@ loop.panel = (function(_, mozL10n) {
       this.setState({selectedTab: tabName});
     },
 
+    getIconUrl: function(tabName, isSelected, isHover) {
+        var iconHash = ((tabName === "contacts") ? "contacts" : "precall");
+        var iconUrl = "loop/shared/img/icons-16x16.svg#" + iconHash;
+        if (isHover) {
+          return iconUrl + "-hover";
+        } else if (isSelected) {
+          return iconUrl + "-active";
+        } else {
+          return iconUrl;
+        }
+      },
+
+    updateTabIcon: function(event, isOver) {
+      var tabName =  event.target.dataset.tabName;
+      if (tabName) {
+        var isSelected = (this.state.selectedTab == tabName);
+        var iconUrl = this.getIconUrl(tabName, isSelected, isOver);
+        this.refs[tabName + "IconTab"].getDOMNode().src = iconUrl;
+      }
+    },
+
+    handleMouseLeaveTab: function(event) {
+      event.stopPropagation();
+      event.preventDefault();
+      this.updateTabIcon(event, false);
+    },
+
+    handleMouseOverTab: function(event) {
+      event.stopPropagation();
+      event.preventDefault();
+      this.updateTabIcon(event, true);
+    },
+
     render: function() {
       var cx = React.addons.classSet;
       var tabButtons = [];
@@ -86,7 +119,12 @@ loop.panel = (function(_, mozL10n) {
                 "data-tab-name": tabName, 
                 key: i, 
                 onClick: this.handleSelectTab, 
-                title: mozL10n.get(tabName + "_tab_button_tooltip")})
+                onMouseOver: this.handleMouseOverTab, 
+                onMouseLeave: this.handleMouseLeaveTab, 
+                title: mozL10n.get(tabName + "_tab_button_tooltip")}, 
+              React.createElement("img", {ref: tabName + "IconTab", src: this.getIconUrl(tabName, isSelected, false)}), 
+              mozL10n.get(tabName + "_tab_button_tooltip")
+            )
           );
         }
         tabs.push(
