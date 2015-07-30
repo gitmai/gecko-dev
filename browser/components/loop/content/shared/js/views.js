@@ -231,40 +231,44 @@ loop.shared.views = (function(_, mozL10n) {
 
     render: function() {
       return (
-        React.createElement("ul", {className: "conversation-toolbar"}, 
-          React.createElement("li", {className: "conversation-toolbar-btn-box btn-hangup-entry"}, 
-            React.createElement("button", {className: "btn btn-hangup", 
-                    disabled: !this.props.enableHangup, 
-                    onClick: this.handleClickHangup, 
-                    title: mozL10n.get("hangup_button_title")}, 
-              this._getHangupButtonLabel()
+        React.createElement("div", {className: "conversation-toolbar-overlay"}, 
+          React.createElement("ul", {className: "conversation-toolbar"}, 
+            React.createElement("li", {className: "conversation-toolbar-btn-box btn-hangup-entry"}, 
+              React.createElement("button", {className: "btn btn-hangup", 
+                      disabled: !this.props.enableHangup, 
+                      onClick: this.handleClickHangup, 
+                      title: mozL10n.get("hangup_button_title")}, 
+                this._getHangupButtonLabel()
+              )
+            ), 
+            React.createElement("li", {className: "conversation-toolbar-btn-box"}, 
+              React.createElement("div", {className: "conversation-toolbar-media-btn-group-box"}, 
+
+                  React.createElement(MediaControlButton, {action: this.handleToggleVideo, 
+                                      enabled: this.props.video.enabled, 
+                                      scope: "local", type: "video", 
+                                      visible: this.props.video.visible}), 
+                  React.createElement(MediaControlButton, {action: this.handleToggleAudio, 
+                                      enabled: this.props.audio.enabled, 
+                                      scope: "local", type: "audio", 
+                                      visible: this.props.audio.visible})
+
+              )
+            ), 
+            React.createElement("li", {className: "conversation-toolbar-btn-box"}, 
+              React.createElement(ScreenShareControlButton, {dispatcher: this.props.dispatcher, 
+                                        state: this.props.screenShare.state, 
+                                        visible: this.props.screenShare.visible})
+            ), 
+            React.createElement("li", {className: "conversation-toolbar-btn-box btn-edit-entry"}, 
+              React.createElement(MediaControlButton, {action: this.handleToggleEdit, 
+                                  enabled: this.props.edit.enabled, 
+                                  scope: "local", 
+                                  title: mozL10n.get(this.props.edit.enabled ?
+                                    "context_edit_tooltip" : "context_hide_tooltip"), 
+                                  type: "edit", 
+                                  visible: this.props.edit.visible})
             )
-          ), 
-          React.createElement("li", {className: "conversation-toolbar-btn-box"}, 
-            React.createElement(MediaControlButton, {action: this.handleToggleVideo, 
-                                enabled: this.props.video.enabled, 
-                                scope: "local", type: "video", 
-                                visible: this.props.video.visible})
-          ), 
-          React.createElement("li", {className: "conversation-toolbar-btn-box"}, 
-            React.createElement(MediaControlButton, {action: this.handleToggleAudio, 
-                                enabled: this.props.audio.enabled, 
-                                scope: "local", type: "audio", 
-                                visible: this.props.audio.visible})
-          ), 
-          React.createElement("li", {className: "conversation-toolbar-btn-box"}, 
-            React.createElement(ScreenShareControlButton, {dispatcher: this.props.dispatcher, 
-                                      state: this.props.screenShare.state, 
-                                      visible: this.props.screenShare.visible})
-          ), 
-          React.createElement("li", {className: "conversation-toolbar-btn-box btn-edit-entry"}, 
-            React.createElement(MediaControlButton, {action: this.handleToggleEdit, 
-                                enabled: this.props.edit.enabled, 
-                                scope: "local", 
-                                title: mozL10n.get(this.props.edit.enabled ?
-                                  "context_edit_tooltip" : "context_hide_tooltip"), 
-                                type: "edit", 
-                                visible: this.props.edit.visible})
           )
         )
       );
@@ -479,14 +483,14 @@ loop.shared.views = (function(_, mozL10n) {
               React.createElement("div", {className: "video_wrapper remote_wrapper"}, 
                 React.createElement("div", {className: "video_inner remote focus-stream"})
               ), 
-              React.createElement("div", {className: localStreamClasses})
-            ), 
-            React.createElement(ConversationToolbar, {
-              audio: this.state.audio, 
-              dispatcher: this.props.dispatcher, 
-              hangup: this.hangup, 
-              publishStream: this.publishStream, 
-              video: this.state.video})
+              React.createElement("div", {className: localStreamClasses}), 
+              React.createElement(ConversationToolbar, {
+                audio: this.state.audio, 
+                dispatcher: this.props.dispatcher, 
+                hangup: this.hangup, 
+                publishStream: this.publishStream, 
+                video: this.state.video})
+            )
           )
         )
       );

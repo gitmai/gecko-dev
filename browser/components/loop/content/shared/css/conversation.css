@@ -2,6 +2,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+html {
+  font-size: 10px;
+  font-family: menu;
+
+}
 /* Shared conversation window styles */
 .conversation {
   position: relative;
@@ -9,22 +14,19 @@
 
 .conversation-toolbar {
   z-index: 999; /* required to have it superimposed to the video element */
-  border: 1px solid #5a5a5a;
-  border-left: 0;
-  border-right: 0;
-  background: rgba(0,0,0,.70);
+  border: 0;
 }
 
 /* desktop version */
-.fx-embedded .conversation-toolbar {
+.fx-embedded .conversation-toolbar-overlay {
   /* required to have dropdowns float atop the .room-invitation-overlay: */
   z-index: 1020;
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  bottom: 1rem;
+  left: 2.5rem;
+  right: .7rem;
   /* note that .room-invitation-overlay top matches this */
-  height: 26px;
+  height: 2.6rem;
 }
 
 /* standalone version */
@@ -45,6 +47,7 @@
 
 .conversation-toolbar > li {
   float: left;
+  margin-right: .7rem;
   font-size: 0; /* prevents vertical bottom padding added to buttons in google
                    chrome */
 }
@@ -55,15 +58,9 @@
     margin-right: 16px;
   }
 
-.btn-edit-entry {
-  float: right !important;
-  border-left: 1px solid #5a5a5a;
+.conversation-toolbar-media-btn-group-box > li:first-child {
+  border-right: 2px solid white;
 }
-
-.conversation-toolbar-btn-box {
-  border-right: 1px solid #5a5a5a;
-}
-
   .standalone .conversation-toolbar-btn-box {
     /* overwrite the style for standalone
      * because we reuse the same component */
@@ -71,13 +68,62 @@
   }
 
 .conversation-toolbar .btn {
-  /* dimensions according to spec
-   * https://people.mozilla.org/~dhenein/labs/loop-link-spec/#video-call */
-  width: 32px;
-  height: 24px;
   background-position: center;
-  background-size: 40%;
+  background-size: 14px;
   background-repeat: no-repeat;
+  background-color: rgba(255,255,255,.6);
+  border-radius: 40px;
+  border: 2px solid rgba(74, 74, 74, .3);
+  height: 28px;
+  width: 28px;
+}
+
+.conversation-toolbar .btn:hover {
+    background-color: rgba(255,255,255,1);
+}
+
+.conversation-toolbar-media-btn-group-box {
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 30px;
+  border: 2px solid rgba(74, 74, 74, 0.3);
+  height: 28px;
+  width: 67px;
+}
+
+.conversation-toolbar-media-btn-group-box > li {
+  float:left;
+}
+
+.conversation-toolbar-media-btn-group-box > .btn:hover {
+  background-color: rgba(255, 255, 255, 1);
+  height: 24px;
+  vertical-align: top;
+}
+
+.conversation-toolbar-media-btn-group-box > .btn {
+  width: 31px;
+  height: 28px;
+  border: 0;
+  background-color: transparent;
+}
+
+.conversation-toolbar-media-btn-group-box button:last-child{
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.conversation-toolbar-media-btn-group-box button:first-child {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.conversation-toolbar-media-btn-group-box button:first-child > .btn:before {
+  content: "";
+  width: 1px;
+  background: rgba(74, 74, 74, 0.3);
+  float: right;
+  height: 14px;
+  margin-right: -4px;
 }
 
 .standalone .media-control {
@@ -106,7 +152,7 @@
   cursor: pointer;
   -moz-margin-start: .2rem;
 }
-
+/* conversationViews.jsx */
 .fx-embedded-btn-icon-video,
 .fx-embedded-btn-video-small,
 .fx-embedded-tiny-video-icon {
@@ -155,24 +201,11 @@
 }
 
 .fx-embedded .conversation-toolbar .btn-hangup {
-  background-image: url(../img/hangup-inverse-14x14.png);
+  background-color: #D74345;
+  border: 1px solid #D74345;
+  background-image: url(../img/icons-14x14.svg#hangup-white);
 }
-@media (min-resolution: 2dppx) {
-  .fx-embedded .conversation-toolbar .btn-hangup {
-    background-image: url(../img/hangup-inverse-14x14@2x.png);
-  }
-}
-
-/* Common media control buttons behavior */
-.conversation-toolbar .transparent-button {
-  background-color: transparent;
-  opacity: 1;
-}
-.conversation-toolbar .transparent-button:hover,
-.conversation-toolbar .transparent-button.menu-showing {
-  background-color: rgba(255,255,255,.35);
-  opacity: 1;
-}
+/* No se donde se usa*/
 .conversation-toolbar .media-control.muted {
   background-color: #0096DD;
   opacity: 1;
@@ -180,52 +213,26 @@
 
 /* Audio mute button */
 .btn-mute-audio {
-  background-image: url(../img/audio-inverse-14x14.png);
+  background-image: url(../img/icons-16x16.svg#audio-still);
 }
+
 .btn-mute-audio.muted {
-  background-image: url(../img/mute-inverse-14x14.png);
-}
-@media (min-resolution: 2dppx) {
-  .btn-mute-audio {
-    background-image: url(../img/audio-inverse-14x14@2x.png);
-  }
-  .btn-mute-audio.muted {
-    background-image: url(../img/mute-inverse-14x14@2x.png);
-  }
+  background-image: url(../img/icons-14x14.svg#mute-active);
 }
 
 /* Video mute button */
 .btn-mute-video {
-  background-image: url(../img/video-inverse-14x14.png);
+  background-image: url(../img/icons-16x16.svg#video-still);
 }
 .btn-mute-video.muted {
-  background-image: url(../img/facemute-14x14.png);
-}
-@media (min-resolution: 2dppx) {
-  .btn-mute-video {
-    background-image: url(../img/video-inverse-14x14@2x.png);
-  }
-  .btn-mute-video.muted {
-    background-image: url(../img/facemute-14x14@2x.png);
-  }
+  background-image: url(../img/icons-14x14.svg#facemute-active);
 }
 
-/* Screen share button */
-.btn-mute-edit,
+.btn-mute-edit {
+  background-image: url(../img/icons-10x10.svg#edit-grey)
+}
 .btn-screen-share {
-  position: relative;
-  background-image: url(../img/icons-10x10.svg#edit-white);
-  background-size: 16px 16px;
-}
-
-.btn-screen-share {
-  background-image: url(../img/icons-16x16.svg#screen-white);
-  width: 42px;
-}
-
-/* Make room for the chevron. */
-.conversation-toolbar .btn-screen-share:not(.active) {
-  background-position: 5px center;
+  background-image: url(../img/icons-16x16.svg#screen-hover);
 }
 
 .btn-screen-share.active {
@@ -240,20 +247,6 @@
 
 .btn-screen-share.disabled {
   background-image: url(../img/icons-16x16.svg#screen-disabled);
-}
-
-.btn-screen-share .chevron {
-  background-image: url(../img/icons-10x10.svg#dropdown-white);
-  background-size: 10px 10px;
-  position: absolute;
-  right: 2px;
-  top: 8px;
-  width: 10px;
-  height: 10px;
-}
-
-.btn-screen-share.disabled .chevron {
-  background-image: url(../img/icons-10x10.svg#dropdown-disabled);
 }
 
 .fx-embedded .remote_wrapper {
@@ -398,9 +391,13 @@
     background-color: #111;
   }
 
+.conversation-window-dropdown {
+  bottom: 4rem;
+}
+
 .conversation-window-dropdown > li {
-  padding: 2px;
-  font-size: .7rem;
+  padding: .2rem;
+  font-size: 1rem;
   white-space: nowrap;
 }
 
@@ -799,15 +796,15 @@ html[dir="rtl"] .room-conversation-wrapper header a {
 }
 
 .fx-embedded .room-conversation .conversation-toolbar .btn-hangup {
-  background-image: url("../img/icons-16x16.svg#leave");
+  background-image: url("../img/icons-14x14.svg#exit-white");
 }
 
 .room-invitation-overlay {
   position: absolute;
-  background: rgba(0,0,0,.6);
+  background: rgba(255, 255, 255, 0.6);
   /* This matches .fx-embedded .conversation toolbar height */
-  top: 26px;
-  height: calc(100% - 26px);
+  top: 0;
+  height:100%;
   right: 0;
   left: 0;
   text-align: center;
@@ -835,7 +832,7 @@ html[dir="rtl"] .room-conversation-wrapper header a {
 }
 
 .room-invitation-overlay .btn-group {
-  padding: 0 0 1em 0;
+  padding: 0 0 5rem 0;
 }
 
 .room-invitation-addcontext {
@@ -1295,6 +1292,7 @@ html[dir="rtl"] .room-context-btn-close {
 
   .media-wrapper > .focus-stream > .local {
     position: absolute;
+    display:fixed;
     right: 0;
     /* 30% is the height of the text chat. As we have a margin,
        we don't need to worry about any offset for a border */

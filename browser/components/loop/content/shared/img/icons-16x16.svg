@@ -14,7 +14,7 @@
       fill: #444;
     }
     use[id$="-active"] {
-      fill: #0095dd;
+      fill: #5cccee;
     }
     use[id$="-red"] {
       fill: #d74345
@@ -27,6 +27,9 @@
     }
     use[id$="-disabled"] {
       fill: rgba(255,255,255,.6);
+    }
+    use[id$="-still"] {
+      fill: #00a9dc;
     }
   </style>
   <defs>
@@ -95,6 +98,7 @@
   <use id="audio" xlink:href="#audio-shape"/>
   <use id="audio-hover" xlink:href="#audio-shape"/>
   <use id="audio-active" xlink:href="#audio-shape"/>
+  <use id="audio-still" xlink:href="#audio-shape"/>
   <use id="block" xlink:href="#block-shape"/>
   <use id="block-red" xlink:href="#block-shape"/>
   <use id="block-hover" xlink:href="#block-shape"/>
@@ -126,8 +130,10 @@
   <use id="video" xlink:href="#video-shape"/>
   <use id="video-hover" xlink:href="#video-shape"/>
   <use id="video-active" xlink:href="#video-shape"/>
+  <use id="video-still" xlink:href="#video-shape"/>
   <use id="tour" xlink:href="#tour-shape"/>
   <use id="screen-white" xlink:href="#screen-shape"/>
+  <use id="screen-hover" xlink:href="#screen-shape"/>
   <use id="screen-disabled" xlink:href="#screen-shape"/>
   <use id="screenmute-white" xlink:href="#screenmute-shape"/>
   <use id="delete" xlink:href="#delete-shape"/>
