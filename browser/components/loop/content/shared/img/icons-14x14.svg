@@ -16,7 +16,7 @@
     use[id$="-active"] {
       fill:  #5cccee;
     }
-    use[id$="-stillblue"] {
+    use[id$="-still"] {
       fill:  #00a9dc;
     }
     use[id$="-lightblue"] {
@@ -57,6 +57,8 @@
   <use id="audio" xlink:href="#audio-shape"/>
   <use id="audio-active" xlink:href="#audio-shape"/>
   <use id="audio-disabled" xlink:href="#audio-shape"/>
+  <use id="audio-still" xlink:href="#audio-shape"/>
+  <use id="audio-white" xlink:href="#audio-shape"/>
   <use id="contacts" xlink:href="#contacts-shape"/>
   <use id="contacts-hover" xlink:href="#contacts-shape"/>
   <use id="contacts-active" xlink:href="#contacts-shape"/>
@@ -66,6 +68,8 @@
   <use id="facemute" xlink:href="#facemute-shape"/>
   <use id="facemute-active" xlink:href="#facemute-shape"/>
   <use id="facemute-disabled" xlink:href="#facemute-shape"/>
+  <use id="facemute-still" xlink:href="#facemute-shape"/>
+  <use id="facemute-white" xlink:href="#facemute-shape"/>
   <use id="hangup" xlink:href="#hangup-shape"/>
   <use id="hangup-white" xlink:href="#hangup-shape"/>
   <use id="hangup-active" xlink:href="#hangup-shape"/>
@@ -82,13 +86,20 @@
   <use id="mute" xlink:href="#mute-shape"/>
   <use id="mute-active" xlink:href="#mute-shape"/>
   <use id="mute-disabled" xlink:href="#mute-shape"/>
+  <use id="mute-still" xlink:href="#mute-shape"/>
+  <use id="mute-white" xlink:href="#mute-shape"/>
   <use id="pause" xlink:href="#pause-shape"/>
   <use id="pause-active" xlink:href="#pause-shape"/>
   <use id="pause-disabled" xlink:href="#pause-shape"/>
+  <use id="screen-white" xlink:href="#screen-shape"/>
+  <use id="screen-hover" xlink:href="#screen-shape"/>
+  <use id="screen-disabled" xlink:href="#screen-shape"/>
+  <use id="screenmute-white" xlink:href="#screenmute-shape"/>
   <use id="video" xlink:href="#video-shape"/>
   <use id="video-white" xlink:href="#video-shape"/>
   <use id="video-active" xlink:href="#video-shape"/>
   <use id="video-disabled" xlink:href="#video-shape"/>
+  <use id="video-still" xlink:href="#video-shape"/>
   <use id="volume" xlink:href="#volume-shape"/>
   <use id="volume-active" xlink:href="#volume-shape"/>
   <use id="volume-disabled" xlink:href="#volume-shape"/>

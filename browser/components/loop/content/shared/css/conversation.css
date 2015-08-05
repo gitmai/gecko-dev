@@ -12,6 +12,10 @@ html {
   position: relative;
 }
 
+button::-moz-focus-inner {
+  border: 0;
+}
+
 .conversation-toolbar {
   z-index: 999; /* required to have it superimposed to the video element */
   border: 0;
@@ -68,7 +72,7 @@ html {
   }
 
 .conversation-toolbar .btn {
-  background-position: center;
+  background-position: center 5px;
   background-size: 14px;
   background-repeat: no-repeat;
   background-color: rgba(255,255,255,.6);
@@ -80,6 +84,10 @@ html {
 
 .conversation-toolbar .btn:hover {
     background-color: rgba(255,255,255,1);
+}
+
+.conversation-toolbar .btn:active {
+    background-color: #5cccee;
 }
 
 .conversation-toolbar-media-btn-group-box {
@@ -99,12 +107,16 @@ html {
   height: 24px;
   vertical-align: top;
 }
+.conversation-toolbar-media-btn-group-box > .btn:active {
+  background-color: #5cccee;
+}
 
 .conversation-toolbar-media-btn-group-box > .btn {
   width: 31px;
   height: 28px;
   border: 0;
   background-color: transparent;
+  clear:both;
 }
 
 .conversation-toolbar-media-btn-group-box button:last-child{
@@ -117,13 +129,12 @@ html {
   border-top-right-radius: 0;
 }
 
-.conversation-toolbar-media-btn-group-box button:first-child > .btn:before {
-  content: "";
+.conversation-toolbar-media-btn-group-box .vertical-separator {
   width: 1px;
   background: rgba(74, 74, 74, 0.3);
-  float: right;
+  display: inline-block;
+  vertical-align: middle;
   height: 14px;
-  margin-right: -4px;
 }
 
 .standalone .media-control {
@@ -205,39 +216,67 @@ html {
   border: 1px solid #D74345;
   background-image: url(../img/icons-14x14.svg#hangup-white);
 }
-/* No se donde se usa*/
-.conversation-toolbar .media-control.muted {
-  background-color: #0096DD;
-  opacity: 1;
-}
 
 /* Audio mute button */
 .btn-mute-audio {
-  background-image: url(../img/icons-16x16.svg#audio-still);
+  background-image: url(../img/icons-14x14.svg#audio-still-with-opacity);
 }
 
 .btn-mute-audio.muted {
-  background-image: url(../img/icons-14x14.svg#mute-active);
+  background-image: url(../img/icons-14x14.svg#mute-still-with-opacity);
 }
+.btn-mute-audio:hover {
+  background-image: url(../img/icons-14x14.svg#audio-still);
+}
+
+.btn-mute-audio.muted:hover {
+  background-image: url(../img/icons-14x14.svg#mute-still);
+}
+
+.btn-mute-audio:active {
+  background-image: url(../img/icons-14x14.svg#audio-white);
+}
+
+.btn-mute-audio.muted:active{
+  background-image: url(../img/icons-14x14.svg#mute-white);
+}
+
 
 /* Video mute button */
 .btn-mute-video {
-  background-image: url(../img/icons-16x16.svg#video-still);
+  background-image: url(../img/icons-14x14.svg#video-still);
 }
+
+.btn-mute-video:active {
+  background-image: url(../img/icons-14x14.svg#video-white);
+}
+
 .btn-mute-video.muted {
-  background-image: url(../img/icons-14x14.svg#facemute-active);
+  background-image: url(../img/icons-14x14.svg#facemute-still);
+}
+
+.btn-mute-video.muted:active {
+  background-image: url(../img/icons-14x14.svg#facemute-white);
 }
 
 .btn-mute-edit {
   background-image: url(../img/icons-10x10.svg#edit-grey)
 }
+
+.btn-mute-edit:active {
+  background-image: url(../img/icons-10x10.svg#edit-white)
+}
+
 .btn-screen-share {
-  background-image: url(../img/icons-16x16.svg#screen-hover);
+  background-image: url(../img/icons-14x14.svg#screen-hover);
+}
+
+.btn-screen-share:active {
+  background-image: url(../img/icons-14x14.svg#screen-white);
 }
 
 .btn-screen-share.active {
-  background-image: url(../img/icons-16x16.svg#screenmute-white);
-  background-color: #6CB23E;
+  background-image: url(../img/icons-14x14.svg#screenmute-white);
 }
 
 .btn-mute-edit.muted,
@@ -246,7 +285,7 @@ html {
 }
 
 .btn-screen-share.disabled {
-  background-image: url(../img/icons-16x16.svg#screen-disabled);
+  background-image: url(../img/icons-14x14.svg#screen-disabled);
 }
 
 .fx-embedded .remote_wrapper {

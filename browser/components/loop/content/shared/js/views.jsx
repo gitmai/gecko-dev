@@ -248,6 +248,7 @@ loop.shared.views = (function(_, mozL10n) {
                                       enabled={this.props.video.enabled}
                                       scope="local" type="video"
                                       visible={this.props.video.visible} />
+                  <div className="vertical-separator" />
                   <MediaControlButton action={this.handleToggleAudio}
                                       enabled={this.props.audio.enabled}
                                       scope="local" type="audio"
