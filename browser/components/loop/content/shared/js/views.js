@@ -207,6 +207,11 @@ loop.shared.views = (function(_, mozL10n) {
       video: React.PropTypes.object.isRequired
     },
 
+    onMouseMove: function(e) {
+        // Calls back to the parent with the drag
+      this.props.handleMove(e);
+    },
+
     handleClickHangup: function() {
       this.props.hangup();
     },

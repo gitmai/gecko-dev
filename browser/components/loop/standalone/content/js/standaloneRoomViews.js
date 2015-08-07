@@ -468,14 +468,8 @@ loop.standaloneRoomViews = (function(mozL10n) {
         this.props.screenSharePosterUrl);
 
       return (
-
-
         React.createElement("div", {className: "room-conversation-wrapper standalone-room-wrapper"}, 
-        React.createElement("div", {id: "svgfix"}, 
-  React.createElement("object", {data: "../content/shared/img/icons-14x14.svg#exit-white"}), 
-  React.createElement("object", {data: "../content/shared/img/icons-14x14.svg#mute-still"})
-
-  ), "          ", React.createElement("div", {className: "beta-logo"}), 
+          React.createElement("div", {className: "beta-logo"}), 
           React.createElement(StandaloneRoomHeader, {dispatcher: this.props.dispatcher}), 
           React.createElement(sharedViews.MediaLayoutView, {
             dispatcher: this.props.dispatcher, 

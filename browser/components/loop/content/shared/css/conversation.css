@@ -26,13 +26,6 @@ button::-moz-focus-inner {
   bottom: 1rem;
 }
 
-#svgfix {
-  width: 0;
-  height: 0;
-  position: absolute;
-  visibility: hidden;
-}
-
 /* standalone version */
 .standalone .conversation-toolbar {
   padding: 2em;
@@ -65,31 +58,26 @@ html[dir=rtl] .conversation-toolbar > li {
 }
 
 .conversation-toolbar .btn {
-  background-position: center 5px;
-  background-size: 14px;
+  background-position: center;
+  background-size: 28px;
   background-repeat: no-repeat;
-  background-color: rgba(255,255,255,1);
-  border-radius: 40px;
-  height: 24px;
-  width: 24px;
-  -moz-box-shadow: 0 0 2px #4a4a4a;
-  -webkit-box-shadow: 0 0 2px #4a4a4a;
-  box-shadow: 0px 0px 2px #4a4a4a;
+  background-color: transparent;
+  height: 28px;
+  width: 28px;
 }
 
+/*
 .conversation-toolbar .btn:active,
 .conversation-toolbar .btn:hover {
   background-color: #5cccee;
 }
+*/
 
 .conversation-toolbar-media-btn-group-box {
   background-color: rgba(255,255,255,.9);
   border-radius: 30px;
   height: 24px;
   width: 63px;
-  -moz-box-shadow: 0 0 2px #4a4a4a;
-  -webkit-box-shadow: 0 0 2px #4a4a4a;
-  box-shadow: 0px 0px 2px #4a4a4a;
 }
 
 .conversation-toolbar-media-btn-group-box > li {
@@ -99,16 +87,17 @@ html[dir=rtl] .conversation-toolbar > li {
 html[dir=rtl] .conversation-toolbar-media-btn-group-box > li {
   float: right;
 }
-
+/*
 .conversation-toolbar-media-btn-group-box > .btn:hover,
 .conversation-toolbar-media-btn-group-box > .btn:active {
   background-color: #5cccee;
 }
-
+*/
 .conversation-toolbar-media-btn-group-box > .btn {
   width: 31px;
-  height: 24px;
+  height: 28px;
   border: 0;
+  overflow:hidden;
   background-color: transparent;
 }
 
@@ -128,6 +117,7 @@ html[dir=rtl] .conversation-toolbar-media-btn-group-box > li {
   display: inline-block;
   vertical-align: middle;
   height: 14px;
+  box-shadow: 0px 0px 0px;
 }
 
 .fx-embedded-answer-btn-text {
@@ -233,26 +223,25 @@ html[dir=rtl] .conversation-toolbar-media-btn-group-box > li {
 }
 
 .btn-mute-edit {
-  background-image: url(../img/icons-10x10.svg#edit-grey)
+  width: 28px;
+  height: 28px;
+  background-size: 28px;
+  background-image: url("../img/svg/settings.svg");
 }
 
 .btn-mute-edit:hover,
 .btn-mute-edit:active {
-  background-image: url(../img/icons-10x10.svg#edit-white)
+  background-image: url("../img/svg/settings_h.svg");
 }
 
 .btn-screen-share {
-  background-image: url(../img/icons-14x14.svg#screen-hover);
+  background-image: url(../img/svg/sharing.svg);
 }
 
-.btn-screen-share:hover,
-.btn-screen-share:active {
-  background-image: url(../img/icons-14x14.svg#screen-white);
-}
 
 .btn-screen-share.hover,
 .btn-screen-share.active {
-  background-image: url(../img/icons-14x14.svg#screenmute-white);
+  background-image: url("../img/svg/sharing_h.svg");
 }
 
 .btn-mute-edit.muted,
@@ -261,7 +250,7 @@ html[dir=rtl] .conversation-toolbar-media-btn-group-box > li {
 }
 
 .btn-screen-share.disabled {
-  background-image: url(../img/icons-14x14.svg#screen-disabled);
+  background-image: url("../img/svg/sharing-no.svg");
 }
 
 .fx-embedded .remote_wrapper {
