@@ -53,32 +53,37 @@ html[dir=rtl] .conversation-toolbar > li {
   font-size: 0;
 }
 
-.conversation-toolbar-media-btn-group-box > li:first-child {
-  border-right: 2px solid white;
-}
-
 .conversation-toolbar .btn {
   background-position: center;
   background-size: 28px;
   background-repeat: no-repeat;
   background-color: transparent;
   height: 28px;
-  width: 28px;
+  width: 33px;
 }
-
-/*
-.conversation-toolbar .btn:active,
-.conversation-toolbar .btn:hover {
-  background-color: #5cccee;
-}
-*/
 
 .conversation-toolbar-media-btn-group-box {
-  background-color: rgba(255,255,255,.9);
-  border-radius: 30px;
-  height: 24px;
-  width: 63px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  background-image: url("../img/svg/media-group.svg");
+  background-size: cover;
+  height: 28px;
+  width: 67px;
 }
+
+.conversation-toolbar-media-btn-group-box > button:last-child:active,
+.conversation-toolbar-media-btn-group-box > button:last-child:hover {
+  background-image: url("../img/svg/media-group-right-hover.svg");
+  background-size: cover;
+}
+
+.conversation-toolbar-media-btn-group-box > button:first-child:active,
+.conversation-toolbar-media-btn-group-box > button:first-child:hover {
+  background-image: url("../img/svg/media-group-left-hover.svg");
+  background-size: cover;
+}
+
 
 .conversation-toolbar-media-btn-group-box > li {
   float: left;
@@ -86,38 +91,6 @@ html[dir=rtl] .conversation-toolbar > li {
 
 html[dir=rtl] .conversation-toolbar-media-btn-group-box > li {
   float: right;
-}
-/*
-.conversation-toolbar-media-btn-group-box > .btn:hover,
-.conversation-toolbar-media-btn-group-box > .btn:active {
-  background-color: #5cccee;
-}
-*/
-.conversation-toolbar-media-btn-group-box > .btn {
-  width: 31px;
-  height: 28px;
-  border: 0;
-  overflow:hidden;
-  background-color: transparent;
-}
-
-.conversation-toolbar-media-btn-group-box button:last-child{
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.conversation-toolbar-media-btn-group-box button:first-child {
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
-}
-
-.conversation-toolbar-media-btn-group-box .vertical-separator {
-  width: 1px;
-  background: rgba(74,74,74,0.3);
-  display: inline-block;
-  vertical-align: middle;
-  height: 14px;
-  box-shadow: 0px 0px 0px;
 }
 
 .fx-embedded-answer-btn-text {
@@ -178,48 +151,46 @@ html[dir=rtl] .conversation-toolbar-media-btn-group-box > li {
   }
 }
 
-.conversation-toolbar .btn-hangup,
-.conversation-toolbar .btn-hangup:hover,
-.conversation-toolbar .btn-hangup:active {
-  background-color: #D74345;
-  background-image: url("../img/icons-14x14.svg#exit-white");
+.conversation-toolbar .btn-hangup {
+  background-image: url("../img/svg/exit.svg");
+  border: 0;
 }
 
 /* Audio mute button */
-.btn-mute-audio {
-  background-image: url(../img/icons-14x14.svg#audio-still);
+.btn-mute-audio:after {
+  content: url("../img/svg/audio.svg");
 }
 
-.btn-mute-audio.muted {
-  background-image: url(../img/icons-14x14.svg#mute-still);
+.btn-mute-audio.muted:after {
+  content: url("../img/svg/audio-mute.svg");
 }
-.btn-mute-audio:hover,
-.btn-mute-audio:active {
-  background-image: url(../img/icons-14x14.svg#audio-white);
+.btn-mute-audio:hover:after,
+.btn-mute-audio:active:after {
+  content: url("../img/svg/audio-hover.svg");
 }
 
-.btn-mute-audio.muted:hover,
-.btn-mute-audio.muted:active {
-  background-image: url(../img/icons-14x14.svg#mute-white);
+.btn-mute-audio.muted:hover:after,
+.btn-mute-audio.muted:active:after {
+  content: url("../img/svg/audio-mute-hover.svg");
 }
 
 /* Video mute button */
-.btn-mute-video {
-  background-image: url(../img/icons-14x14.svg#video-still);
+.btn-mute-video:after {
+  content: url("../img/svg/video.svg");
 }
 
-.btn-mute-video:active,
-.btn-mute-video:hover {
-  background-image: url(../img/icons-14x14.svg#video-white);
+.btn-mute-video:active:after,
+.btn-mute-video:hover:after {
+  content: url("../img/svg/video-hover.svg");
 }
 
-.btn-mute-video.muted {
-  background-image: url(../img/icons-14x14.svg#facemute-still);
+.btn-mute-video.muted:after {
+  content: url("../img/svg/video-mute.svg");
 }
 
-.btn-mute-video.muted:hover,
-.btn-mute-video.muted:active {
-  background-image: url(../img/icons-14x14.svg#facemute-white);
+.btn-mute-video.muted:hover:after,
+.btn-mute-video.muted:active:after {
+  content: url("../img/svg/video-mute-hover.svg");
 }
 
 .btn-mute-edit {
@@ -231,17 +202,16 @@ html[dir=rtl] .conversation-toolbar-media-btn-group-box > li {
 
 .btn-mute-edit:hover,
 .btn-mute-edit:active {
-  background-image: url("../img/svg/settings_h.svg");
+  background-image: url("../img/svg/settings-hover.svg");
 }
 
 .btn-screen-share {
-  background-image: url(../img/svg/sharing.svg);
+  background-image: url("../img/svg/sharing.svg");
 }
 
-
-.btn-screen-share.hover,
-.btn-screen-share.active {
-  background-image: url("../img/svg/sharing_h.svg");
+.btn-screen-share:hover,
+.btn-screen-share:active {
+  background-image: url("../img/svg/sharing-hover.svg");
 }
 
 .btn-mute-edit.muted,
@@ -250,7 +220,7 @@ html[dir=rtl] .conversation-toolbar-media-btn-group-box > li {
 }
 
 .btn-screen-share.disabled {
-  background-image: url("../img/svg/sharing-no.svg");
+  background-image: url("../img/svg/sharing-mute.svg");
 }
 
 .fx-embedded .remote_wrapper {
