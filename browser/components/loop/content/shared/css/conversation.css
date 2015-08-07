@@ -17,32 +17,30 @@ button::-moz-focus-inner {
 }
 
 .conversation-toolbar {
-  z-index: 999; /* required to have it superimposed to the video element */
+  z-index: 1020; /* required to have it superimposed to the video element */
   border: 0;
-}
-
-/* desktop version */
-.fx-embedded .conversation-toolbar-overlay {
-  /* required to have dropdowns float atop the .room-invitation-overlay: */
-  z-index: 1020;
-  position: absolute;
-  bottom: 1rem;
   left: 2.5rem;
   right: .7rem;
-  /* note that .room-invitation-overlay top matches this */
   height: 2.6rem;
+  position: absolute;
+  bottom: 1rem;
+}
+
+#svgfix {
+  width: 0;
+  height: 0;
+  position: absolute;
+  visibility: hidden;
 }
 
 /* standalone version */
 .standalone .conversation-toolbar {
-  padding: 20px;
-  height: 64px;
-  border: none;
+  padding: 2em;
 }
 
 .standalone .focus-stream {
   /* Set at maximum height, minus height of conversation toolbar */
-  height: calc(100% - 64px);
+  height: 100%;
 }
 
 .standalone .in-call .focus-stream {
@@ -56,67 +54,62 @@ button::-moz-focus-inner {
                    chrome */
 }
 
-  .standalone .conversation-toolbar > li {
-    /* XXX Might make sense to use relative units here.
-     */
-    margin-right: 16px;
-  }
+html[dir=rtl] .conversation-toolbar > li {
+  float: right;
+  margin-left: .7rem;
+  font-size: 0;
+}
 
 .conversation-toolbar-media-btn-group-box > li:first-child {
   border-right: 2px solid white;
 }
-  .standalone .conversation-toolbar-btn-box {
-    /* overwrite the style for standalone
-     * because we reuse the same component */
-    border: none;
-  }
 
 .conversation-toolbar .btn {
   background-position: center 5px;
   background-size: 14px;
   background-repeat: no-repeat;
-  background-color: rgba(255,255,255,.6);
+  background-color: rgba(255,255,255,1);
   border-radius: 40px;
-  border: 2px solid rgba(74, 74, 74, .3);
-  height: 28px;
-  width: 28px;
+  height: 24px;
+  width: 24px;
+  -moz-box-shadow: 0 0 2px #4a4a4a;
+  -webkit-box-shadow: 0 0 2px #4a4a4a;
+  box-shadow: 0px 0px 2px #4a4a4a;
 }
 
+.conversation-toolbar .btn:active,
 .conversation-toolbar .btn:hover {
-    background-color: rgba(255,255,255,1);
-}
-
-.conversation-toolbar .btn:active {
-    background-color: #5cccee;
+  background-color: #5cccee;
 }
 
 .conversation-toolbar-media-btn-group-box {
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255,255,255,.9);
   border-radius: 30px;
-  border: 2px solid rgba(74, 74, 74, 0.3);
-  height: 28px;
-  width: 67px;
+  height: 24px;
+  width: 63px;
+  -moz-box-shadow: 0 0 2px #4a4a4a;
+  -webkit-box-shadow: 0 0 2px #4a4a4a;
+  box-shadow: 0px 0px 2px #4a4a4a;
 }
 
 .conversation-toolbar-media-btn-group-box > li {
-  float:left;
+  float: left;
 }
 
-.conversation-toolbar-media-btn-group-box > .btn:hover {
-  background-color: rgba(255, 255, 255, 1);
-  height: 24px;
-  vertical-align: top;
+html[dir=rtl] .conversation-toolbar-media-btn-group-box > li {
+  float: right;
 }
+
+.conversation-toolbar-media-btn-group-box > .btn:hover,
 .conversation-toolbar-media-btn-group-box > .btn:active {
   background-color: #5cccee;
 }
 
 .conversation-toolbar-media-btn-group-box > .btn {
   width: 31px;
-  height: 28px;
+  height: 24px;
   border: 0;
   background-color: transparent;
-  clear:both;
 }
 
 .conversation-toolbar-media-btn-group-box button:last-child{
@@ -131,21 +124,11 @@ button::-moz-focus-inner {
 
 .conversation-toolbar-media-btn-group-box .vertical-separator {
   width: 1px;
-  background: rgba(74, 74, 74, 0.3);
+  background: rgba(74,74,74,0.3);
   display: inline-block;
   vertical-align: middle;
   height: 14px;
 }
-
-.standalone .media-control {
-  width: 36px;
-  background-position: center;
-  border-radius: 28px;
-}
-
-  .standalone-conversation-toolbar-media-btn:hover {
-    background-color: rgba(255,255,255,.35);
-  }
 
 .fx-embedded-answer-btn-text {
   vertical-align: bottom;
@@ -163,6 +146,7 @@ button::-moz-focus-inner {
   cursor: pointer;
   -moz-margin-start: .2rem;
 }
+
 /* conversationViews.jsx */
 .fx-embedded-btn-icon-video,
 .fx-embedded-btn-video-small,
@@ -204,50 +188,38 @@ button::-moz-focus-inner {
   }
 }
 
-.standalone .btn-hangup {
-  width: auto;
-  font-size: 12px;
-  border-radius: 2px;
-  padding: 0 20px;
-}
-
-.fx-embedded .conversation-toolbar .btn-hangup {
+.conversation-toolbar .btn-hangup,
+.conversation-toolbar .btn-hangup:hover,
+.conversation-toolbar .btn-hangup:active {
   background-color: #D74345;
-  border: 1px solid #D74345;
-  background-image: url(../img/icons-14x14.svg#hangup-white);
+  background-image: url("../img/icons-14x14.svg#exit-white");
 }
 
 /* Audio mute button */
 .btn-mute-audio {
-  background-image: url(../img/icons-14x14.svg#audio-still-with-opacity);
-}
-
-.btn-mute-audio.muted {
-  background-image: url(../img/icons-14x14.svg#mute-still-with-opacity);
-}
-.btn-mute-audio:hover {
   background-image: url(../img/icons-14x14.svg#audio-still);
 }
 
-.btn-mute-audio.muted:hover {
+.btn-mute-audio.muted {
   background-image: url(../img/icons-14x14.svg#mute-still);
 }
-
+.btn-mute-audio:hover,
 .btn-mute-audio:active {
   background-image: url(../img/icons-14x14.svg#audio-white);
 }
 
-.btn-mute-audio.muted:active{
+.btn-mute-audio.muted:hover,
+.btn-mute-audio.muted:active {
   background-image: url(../img/icons-14x14.svg#mute-white);
 }
-
 
 /* Video mute button */
 .btn-mute-video {
   background-image: url(../img/icons-14x14.svg#video-still);
 }
 
-.btn-mute-video:active {
+.btn-mute-video:active,
+.btn-mute-video:hover {
   background-image: url(../img/icons-14x14.svg#video-white);
 }
 
@@ -255,6 +227,7 @@ button::-moz-focus-inner {
   background-image: url(../img/icons-14x14.svg#facemute-still);
 }
 
+.btn-mute-video.muted:hover,
 .btn-mute-video.muted:active {
   background-image: url(../img/icons-14x14.svg#facemute-white);
 }
@@ -263,6 +236,7 @@ button::-moz-focus-inner {
   background-image: url(../img/icons-10x10.svg#edit-grey)
 }
 
+.btn-mute-edit:hover,
 .btn-mute-edit:active {
   background-image: url(../img/icons-10x10.svg#edit-white)
 }
@@ -271,10 +245,12 @@ button::-moz-focus-inner {
   background-image: url(../img/icons-14x14.svg#screen-hover);
 }
 
+.btn-screen-share:hover,
 .btn-screen-share:active {
   background-image: url(../img/icons-14x14.svg#screen-white);
 }
 
+.btn-screen-share.hover,
 .btn-screen-share.active {
   background-image: url(../img/icons-14x14.svg#screenmute-white);
 }
@@ -1097,7 +1073,7 @@ html[dir="rtl"] .room-context-btn-close {
 
 .standalone-room-wrapper > .media-layout {
   /* 50px is the header, 64px for toolbar, 3em is the footer. */
-  height: calc(100% - 50px - 64px - 3em);
+  height: calc(100% - 50px - 3em);
   margin: 0 10px;
 }
 
@@ -1376,7 +1352,6 @@ html[dir="rtl"] .room-context-btn-close {
   height: 100%;
   background: #000;
 }
-
 .standalone .room-conversation-wrapper .video-layout-wrapper {
   /* 50px = height of header, 3em = height of footer */
   /* XXX This is currently wrong for narrow/mobile display,

@@ -468,8 +468,14 @@ loop.standaloneRoomViews = (function(mozL10n) {
         this.props.screenSharePosterUrl);
 
       return (
+
+
         React.createElement("div", {className: "room-conversation-wrapper standalone-room-wrapper"}, 
-          React.createElement("div", {className: "beta-logo"}), 
+        React.createElement("div", {id: "svgfix"}, 
+  React.createElement("object", {data: "../content/shared/img/icons-14x14.svg#exit-white"}), 
+  React.createElement("object", {data: "../content/shared/img/icons-14x14.svg#mute-still"})
+
+  ), "          ", React.createElement("div", {className: "beta-logo"}), 
           React.createElement(StandaloneRoomHeader, {dispatcher: this.props.dispatcher}), 
           React.createElement(sharedViews.MediaLayoutView, {
             dispatcher: this.props.dispatcher, 
@@ -494,19 +500,19 @@ loop.standaloneRoomViews = (function(mozL10n) {
               isFirefox: this.props.isFirefox, 
               joinRoom: this.joinRoom, 
               roomState: this.state.roomState, 
-              roomUsed: this.state.used})
+              roomUsed: this.state.used}), 
+            React.createElement(sharedViews.ConversationToolbar, {
+              audio: {enabled: !this.state.audioMuted,
+                      visible: this._roomIsActive()}, 
+              dispatcher: this.props.dispatcher, 
+              edit: { visible: false, enabled: false}, 
+              enableHangup: this._roomIsActive(), 
+              hangup: this.leaveRoom, 
+              hangupButtonLabel: mozL10n.get("rooms_leave_button_label"), 
+              publishStream: this.publishStream, 
+              video: {enabled: !this.state.videoMuted,
+                      visible: this._roomIsActive()}})
           ), 
-          React.createElement(sharedViews.ConversationToolbar, {
-            audio: {enabled: !this.state.audioMuted,
-                    visible: this._roomIsActive()}, 
-            dispatcher: this.props.dispatcher, 
-            edit: { visible: false, enabled: false}, 
-            enableHangup: this._roomIsActive(), 
-            hangup: this.leaveRoom, 
-            hangupButtonLabel: mozL10n.get("rooms_leave_button_label"), 
-            publishStream: this.publishStream, 
-            video: {enabled: !this.state.videoMuted,
-                    visible: this._roomIsActive()}}), 
           React.createElement(loop.fxOSMarketplaceViews.FxOSHiddenMarketplaceView, {
             marketplaceSrc: this.state.marketplaceSrc, 
             onMarketplaceMessage: this.state.onMarketplaceMessage}), 

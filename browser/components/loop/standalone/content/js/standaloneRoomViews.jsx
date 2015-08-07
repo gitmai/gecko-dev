@@ -468,8 +468,14 @@ loop.standaloneRoomViews = (function(mozL10n) {
         this.props.screenSharePosterUrl);
 
       return (
+
+
         <div className="room-conversation-wrapper standalone-room-wrapper">
-          <div className="beta-logo" />
+        <div id="svgfix">
+  <object data="../content/shared/img/icons-14x14.svg#exit-white" />
+  <object data="../content/shared/img/icons-14x14.svg#mute-still" />
+
+  </div>          <div className="beta-logo" />
           <StandaloneRoomHeader dispatcher={this.props.dispatcher} />
           <sharedViews.MediaLayoutView
             dispatcher={this.props.dispatcher}
@@ -495,7 +501,6 @@ loop.standaloneRoomViews = (function(mozL10n) {
               joinRoom={this.joinRoom}
               roomState={this.state.roomState}
               roomUsed={this.state.used} />
-          
             <sharedViews.ConversationToolbar
               audio={{enabled: !this.state.audioMuted,
                       visible: this._roomIsActive()}}

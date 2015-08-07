@@ -231,7 +231,6 @@ loop.shared.views = (function(_, mozL10n) {
 
     render: function() {
       return (
-        React.createElement("div", {className: "conversation-toolbar-overlay"}, 
           React.createElement("ul", {className: "conversation-toolbar"}, 
             React.createElement("li", {className: "conversation-toolbar-btn-box btn-hangup-entry"}, 
               React.createElement("button", {className: "btn btn-hangup", 
@@ -271,7 +270,6 @@ loop.shared.views = (function(_, mozL10n) {
                                   visible: this.props.edit.visible})
             )
           )
-        )
       );
     }
   });
@@ -482,15 +480,17 @@ loop.shared.views = (function(_, mozL10n) {
           React.createElement("div", {className: "conversation in-call"}, 
             React.createElement("div", {className: "media nested"}, 
               React.createElement("div", {className: "video_wrapper remote_wrapper"}, 
-                React.createElement("div", {className: "video_inner remote focus-stream"})
+                React.createElement("div", {className: "video_inner remote focus-stream"}, 
+                  React.createElement(ConversationToolbar, {
+                    audio: this.state.audio, 
+                    dispatcher: this.props.dispatcher, 
+                    hangup: this.hangup, 
+                    publishStream: this.publishStream, 
+                    video: this.state.video})
+                )
               ), 
-              React.createElement("div", {className: localStreamClasses}), 
-              React.createElement(ConversationToolbar, {
-                audio: this.state.audio, 
-                dispatcher: this.props.dispatcher, 
-                hangup: this.hangup, 
-                publishStream: this.publishStream, 
-                video: this.state.video})
+              React.createElement("div", {className: localStreamClasses})
+
             )
           )
         )
@@ -1062,6 +1062,7 @@ loop.shared.views = (function(_, mozL10n) {
                this.state.localMediaAboslutelyPositioned ?
                 this.renderLocalVideo() : null, 
                this.props.children
+
             ), 
             React.createElement("div", {className: screenShareStreamClasses}, 
               React.createElement(MediaView, {displayAvatar: false, 

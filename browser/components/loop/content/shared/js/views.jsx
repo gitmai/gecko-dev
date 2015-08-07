@@ -207,6 +207,11 @@ loop.shared.views = (function(_, mozL10n) {
       video: React.PropTypes.object.isRequired
     },
 
+    onMouseMove: function(e) {
+        // Calls back to the parent with the drag
+      this.props.handleMove(e);
+    },
+
     handleClickHangup: function() {
       this.props.hangup();
     },
@@ -231,7 +236,6 @@ loop.shared.views = (function(_, mozL10n) {
 
     render: function() {
       return (
-        <div className="conversation-toolbar-overlay">
           <ul className="conversation-toolbar">
             <li className="conversation-toolbar-btn-box btn-hangup-entry">
               <button className="btn btn-hangup"
@@ -271,7 +275,6 @@ loop.shared.views = (function(_, mozL10n) {
                                   visible={this.props.edit.visible} />
             </li>
           </ul>
-        </div>
       );
     }
   });
@@ -482,15 +485,17 @@ loop.shared.views = (function(_, mozL10n) {
           <div className="conversation in-call">
             <div className="media nested">
               <div className="video_wrapper remote_wrapper">
-                <div className="video_inner remote focus-stream"></div>
+                <div className="video_inner remote focus-stream">
+                  <ConversationToolbar
+                    audio={this.state.audio}
+                    dispatcher={this.props.dispatcher}
+                    hangup={this.hangup}
+                    publishStream={this.publishStream}
+                    video={this.state.video} />
+                </div>
               </div>
               <div className={localStreamClasses}></div>
-              <ConversationToolbar
-                audio={this.state.audio}
-                dispatcher={this.props.dispatcher}
-                hangup={this.hangup}
-                publishStream={this.publishStream}
-                video={this.state.video} />
+
             </div>
           </div>
         </div>
@@ -1062,6 +1067,7 @@ loop.shared.views = (function(_, mozL10n) {
               { this.state.localMediaAboslutelyPositioned ?
                 this.renderLocalVideo() : null }
               { this.props.children }
+
             </div>
             <div className={screenShareStreamClasses}>
               <MediaView displayAvatar={false}
