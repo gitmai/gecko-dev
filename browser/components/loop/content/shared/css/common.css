@@ -99,18 +99,25 @@ p {
   white-space: nowrap;
 }
 
-.btn-info {
+.btn-rejoin {
+  width:100%;
+}
+
+.btn-info,
+.btn-rejoin {
   background-color: #00a9dc;
   border: 1px solid #00a9dc;
   color: #fff;
 }
 
-  .btn-info:hover {
+  .btn-info:hover,
+  .btn-rejoin:hover {
     background-color: #5cccee;
     border: 1px solid #5cccee;
   }
 
-  .btn-info:active {
+  .btn-info:active,
+  .btn-rejoin:hover {
     background-color: #5cccee;
     border: 1px solid #5cccee;
   }

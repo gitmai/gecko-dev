@@ -329,6 +329,11 @@ loop.conversationViews = (function(mozL10n) {
       this.play("failure");
     },
 
+    handleReload: function() {
+      this.props.dispatcher.dispatch(new sharedActions.RetryCall());
+//      window.reload(true);
+    },
+
     render: function() {
       this.setTitle(mozL10n.get("generic_failure_title"));
 
@@ -344,9 +349,14 @@ loop.conversationViews = (function(mozL10n) {
 
       return (
         <div className="call-window">
+          <div className="error-hello-logo" />
           <h2>{errorString}</h2>
 
           <div className="btn-group call-action-group">
+            <button className="btn btn-rejoin"
+                    onClick={this.props.cancelCall}>
+              {mozL10n.get("rejoin_button")}
+            </button>
             <button className="btn btn-cancel"
                     onClick={this.props.cancelCall}>
               {mozL10n.get("cancel_button")}

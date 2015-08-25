@@ -313,6 +313,24 @@ html[dir="rtl"] .conversation-toolbar-btn-box.btn-edit-entry {
   width: 100%;
 }
 
+.call-window > .error-hello-logo {
+  background-image: url("../img/sad_hello_icon_64x64.svg");
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  flex: 2 1 auto;
+  width: 100%;
+  margin: 30px 0px;
+}
+
+.call-window > .error-message {
+    margin: 1em 0px;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
 /* XXX Once we get the incoming call avatar, bug 1047435, the H2 should
  * disappear from our markup, and we should remove this rule entirely.
  */
