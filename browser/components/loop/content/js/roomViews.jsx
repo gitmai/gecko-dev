@@ -714,7 +714,7 @@ loop.roomViews = (function(mozL10n) {
           //       FULL case should never happen on desktop.
           return (
             <loop.conversationViews.GenericFailureView
-              cancelCall={this.closeWindow}
+              dispatcher={this.props.dispatcher}
               failureReason={this.state.failureReason} />
           );
         }

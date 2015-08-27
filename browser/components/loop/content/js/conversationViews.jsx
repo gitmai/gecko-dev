@@ -316,12 +316,15 @@ loop.conversationViews = (function(mozL10n) {
    */
   var GenericFailureView = React.createClass({
     mixins: [
+      Backbone.Events,
+      loop.store.StoreMixin("conversationStore"),
       sharedMixins.AudioMixin,
       sharedMixins.DocumentTitleMixin
     ],
 
     propTypes: {
-      cancelCall: React.PropTypes.func.isRequired,
+      contact: React.PropTypes.object,
+      dispatcher: React.PropTypes.instanceOf(loop.Dispatcher).isRequired,
       failureReason: React.PropTypes.string
     },
 
@@ -329,37 +332,50 @@ loop.conversationViews = (function(mozL10n) {
       this.play("failure");
     },
 
-    handleReload: function() {
+    _getMessage: function() {
+      if (this.props.failureReason) {
+        switch (this.props.failureReason) {
+          case FAILURE_DETAILS.NO_MEDIA:
+          case FAILURE_DETAILS.UNABLE_TO_PUBLISH_MEDIA:
+            return mozL10n.get("no_media_failure_message");
+          default:
+            return mozL10n.get("generic_failure_title");
+        }
+      }
+
+      switch (this.getStoreState().callStateReason) {
+        case WEBSOCKET_REASONS.REJECT:
+        case WEBSOCKET_REASONS.BUSY:
+        case FAILURE_DETAILS.USER_UNAVAILABLE:
+          var contactDisplayName = _getContactDisplayName(this.props.contact);
+          if (contactDisplayName.length) {
+            return mozL10n.get(
+              "contact_unavailable_title",
+              {"contactName": contactDisplayName});
+          }
+          return mozL10n.get("generic_contact_unavailable_title");
+        case FAILURE_DETAILS.UNABLE_TO_PUBLISH_MEDIA:
+          return mozL10n.get("no_media_failure_message");
+        default:
+          return mozL10n.get("generic_failure_title");
+      }
+    },
+
+    handleRejoinCall: function() {
       this.props.dispatcher.dispatch(new sharedActions.RetryCall());
-//      window.reload(true);
     },
 
     render: function() {
       this.setTitle(mozL10n.get("generic_failure_title"));
-
-      var errorString;
-      switch (this.props.failureReason) {
-        case FAILURE_DETAILS.NO_MEDIA:
-        case FAILURE_DETAILS.UNABLE_TO_PUBLISH_MEDIA:
-          errorString = mozL10n.get("no_media_failure_message");
-          break;
-        default:
-          errorString = mozL10n.get("generic_failure_title");
-      }
-
       return (
         <div className="call-window">
           <div className="error-hello-logo" />
-          <h2>{errorString}</h2>
+          <h2>{this._getMessage()}</h2>
 
           <div className="btn-group call-action-group">
             <button className="btn btn-rejoin"
-                    onClick={this.props.cancelCall}>
+                    onClick={this.handleRejoinCall}>
               {mozL10n.get("rejoin_button")}
-            </button>
-            <button className="btn btn-cancel"
-                    onClick={this.props.cancelCall}>
-              {mozL10n.get("cancel_button")}
             </button>
           </div>
         </div>
@@ -423,155 +439,6 @@ loop.conversationViews = (function(mozL10n) {
           </div>
 
         </ConversationDetailView>
-      );
-    }
-  });
-
-  /**
-   * Call failed view. Displayed when a call fails.
-   */
-  var CallFailedView = React.createClass({
-    mixins: [
-      Backbone.Events,
-      loop.store.StoreMixin("conversationStore"),
-      sharedMixins.AudioMixin,
-      sharedMixins.WindowCloseMixin
-    ],
-
-    propTypes: {
-      contact: React.PropTypes.object.isRequired,
-      dispatcher: React.PropTypes.instanceOf(loop.Dispatcher).isRequired,
-      // This is used by the UI showcase.
-      emailLinkError: React.PropTypes.bool,
-      outgoing: React.PropTypes.bool.isRequired
-    },
-
-    getInitialState: function() {
-      return {
-        emailLinkError: this.props.emailLinkError,
-        emailLinkButtonDisabled: false
-      };
-    },
-
-    componentDidMount: function() {
-      this.play("failure");
-      this.listenTo(this.getStore(), "change:emailLink",
-                    this._onEmailLinkReceived);
-      this.listenTo(this.getStore(), "error:emailLink",
-                    this._onEmailLinkError);
-    },
-
-    componentWillUnmount: function() {
-      this.stopListening(this.getStore());
-    },
-
-    _onEmailLinkReceived: function() {
-      var emailLink = this.getStoreState().emailLink;
-      var contactEmail = _getPreferredEmail(this.props.contact).value;
-      sharedUtils.composeCallUrlEmail(emailLink, contactEmail, null, "callfailed");
-      this.closeWindow();
-    },
-
-    _onEmailLinkError: function() {
-      this.setState({
-        emailLinkError: true,
-        emailLinkButtonDisabled: false
-      });
-    },
-
-    _renderError: function() {
-      if (!this.state.emailLinkError) {
-        return;
-      }
-      return <p className="error">{mozL10n.get("unable_retrieve_url")}</p>;
-    },
-
-    _getTitleMessage: function() {
-      switch (this.getStoreState().callStateReason) {
-        case WEBSOCKET_REASONS.REJECT:
-        case WEBSOCKET_REASONS.BUSY:
-        case FAILURE_DETAILS.USER_UNAVAILABLE:
-          var contactDisplayName = _getContactDisplayName(this.props.contact);
-          if (contactDisplayName.length) {
-            return mozL10n.get(
-              "contact_unavailable_title",
-              {"contactName": contactDisplayName});
-          }
-
-          return mozL10n.get("generic_contact_unavailable_title");
-        case FAILURE_DETAILS.UNABLE_TO_PUBLISH_MEDIA:
-          return mozL10n.get("no_media_failure_message");
-        default:
-          return mozL10n.get("generic_failure_title");
-      }
-    },
-
-    retryCall: function() {
-      this.props.dispatcher.dispatch(new sharedActions.RetryCall());
-    },
-
-    cancelCall: function() {
-      this.props.dispatcher.dispatch(new sharedActions.CancelCall());
-    },
-
-    emailLink: function() {
-      this.setState({
-        emailLinkError: false,
-        emailLinkButtonDisabled: true
-      });
-
-      this.props.dispatcher.dispatch(new sharedActions.FetchRoomEmailLink({
-        roomName: _getContactDisplayName(this.props.contact)
-      }));
-    },
-
-    _renderMessage: function() {
-      if (this.props.outgoing) {
-        return  (<p className="btn-label">{mozL10n.get("generic_failure_with_reason2")}</p>);
-      }
-
-      return null;
-    },
-
-    render: function() {
-      var cx = React.addons.classSet;
-
-      var retryClasses = cx({
-        btn: true,
-        "btn-info": true,
-        "btn-retry": true,
-        hide: !this.props.outgoing
-      });
-      var emailClasses = cx({
-        btn: true,
-        "btn-info": true,
-        "btn-email": true,
-        hide: !this.props.outgoing
-      });
-
-      return (
-        <div className="call-window">
-          <h2>{ this._getTitleMessage() }</h2>
-
-          {this._renderMessage()}
-          {this._renderError()}
-
-          <div className="btn-group call-action-group">
-            <button className="btn btn-cancel"
-                    onClick={this.cancelCall}>
-              {mozL10n.get("cancel_button")}
-            </button>
-            <button className={retryClasses}
-                    onClick={this.retryCall}>
-              {mozL10n.get("retry_call_button")}
-            </button>
-            <button className={emailClasses}
-                    disabled={this.state.emailLinkButtonDisabled}
-                    onClick={this.emailLink}>
-              {mozL10n.get("share_button3")}
-            </button>
-          </div>
-        </div>
       );
     }
   });
@@ -806,10 +673,9 @@ loop.conversationViews = (function(mozL10n) {
           return null;
         }
         case CALL_STATES.TERMINATED: {
-          return (<CallFailedView
+          return (<GenericFailureView
             contact={this.state.contact}
-            dispatcher={this.props.dispatcher}
-            outgoing={this.state.outgoing} />);
+            dispatcher={this.props.dispatcher} />);
         }
         case CALL_STATES.ONGOING: {
           return (<OngoingConversationView
@@ -844,7 +710,6 @@ loop.conversationViews = (function(mozL10n) {
     PendingConversationView: PendingConversationView,
     CallIdentifierView: CallIdentifierView,
     ConversationDetailView: ConversationDetailView,
-    CallFailedView: CallFailedView,
     _getContactDisplayName: _getContactDisplayName,
     GenericFailureView: GenericFailureView,
     AcceptCallView: AcceptCallView,

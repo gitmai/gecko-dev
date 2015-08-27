@@ -26,7 +26,7 @@
   var AcceptCallView = loop.conversationViews.AcceptCallView;
   var DesktopPendingConversationView = loop.conversationViews.PendingConversationView;
   var OngoingConversationView = loop.conversationViews.OngoingConversationView;
-  var CallFailedView = loop.conversationViews.CallFailedView;
+  var GenericFailureView = loop.conversationViews.GenericFailureView;
   var DesktopRoomConversationView = loop.roomViews.DesktopRoomConversationView;
 
   // 2. Standalone webapp
@@ -1069,35 +1069,13 @@
             </FramedExample>
           </Section>
 
-          <Section name="CallFailedView">
+          <Section name="GenericFailureView">
             <FramedExample dashed={true}
                            height={272}
-                           summary="Call Failed - Incoming"
+                           summary="GenericFailureView"
                            width={300}>
               <div className="fx-embedded">
-                <CallFailedView dispatcher={dispatcher}
-                                outgoing={false}
-                                store={conversationStores[0]} />
-              </div>
-            </FramedExample>
-            <FramedExample dashed={true}
-                           height={272}
-                           summary="Call Failed - Outgoing"
-                           width={300}>
-              <div className="fx-embedded">
-                <CallFailedView dispatcher={dispatcher}
-                                outgoing={true}
-                                store={conversationStores[1]} />
-              </div>
-            </FramedExample>
-            <FramedExample dashed={true}
-                           height={272}
-                           summary="Call Failed — with call URL error"
-                           width={300}>
-              <div className="fx-embedded">
-                <CallFailedView dispatcher={dispatcher} emailLinkError={true}
-                                outgoing={true}
-                                store={conversationStores[0]} />
+                <GenericFailureView dispatcher={dispatcher} />
               </div>
             </FramedExample>
           </Section>

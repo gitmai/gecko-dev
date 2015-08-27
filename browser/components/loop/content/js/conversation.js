@@ -84,7 +84,7 @@ loop.conversation = (function(mozL10n) {
             roomStore: this.props.roomStore}));
         }
         case "failed": {
-          return React.createElement(GenericFailureView, {cancelCall: this.closeWindow});
+          return React.createElement(GenericFailureView, {dispatcher: this.props.dispatcher});
         }
         default: {
           // If we don't have a windowType, we don't know what we are yet,

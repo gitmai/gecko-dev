@@ -26,7 +26,7 @@
   var AcceptCallView = loop.conversationViews.AcceptCallView;
   var DesktopPendingConversationView = loop.conversationViews.PendingConversationView;
   var OngoingConversationView = loop.conversationViews.OngoingConversationView;
-  var CallFailedView = loop.conversationViews.CallFailedView;
+  var GenericFailureView = loop.conversationViews.GenericFailureView;
   var DesktopRoomConversationView = loop.roomViews.DesktopRoomConversationView;
 
   // 2. Standalone webapp
@@ -1069,35 +1069,13 @@
             )
           ), 
 
-          React.createElement(Section, {name: "CallFailedView"}, 
+          React.createElement(Section, {name: "GenericFailureView"}, 
             React.createElement(FramedExample, {dashed: true, 
                            height: 272, 
-                           summary: "Call Failed - Incoming", 
+                           summary: "GenericFailureView", 
                            width: 300}, 
               React.createElement("div", {className: "fx-embedded"}, 
-                React.createElement(CallFailedView, {dispatcher: dispatcher, 
-                                outgoing: false, 
-                                store: conversationStores[0]})
-              )
-            ), 
-            React.createElement(FramedExample, {dashed: true, 
-                           height: 272, 
-                           summary: "Call Failed - Outgoing", 
-                           width: 300}, 
-              React.createElement("div", {className: "fx-embedded"}, 
-                React.createElement(CallFailedView, {dispatcher: dispatcher, 
-                                outgoing: true, 
-                                store: conversationStores[1]})
-              )
-            ), 
-            React.createElement(FramedExample, {dashed: true, 
-                           height: 272, 
-                           summary: "Call Failed — with call URL error", 
-                           width: 300}, 
-              React.createElement("div", {className: "fx-embedded"}, 
-                React.createElement(CallFailedView, {dispatcher: dispatcher, emailLinkError: true, 
-                                outgoing: true, 
-                                store: conversationStores[0]})
+                React.createElement(GenericFailureView, {dispatcher: dispatcher})
               )
             )
           ), 
