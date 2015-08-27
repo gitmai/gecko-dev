@@ -26,7 +26,7 @@
   var AcceptCallView = loop.conversationViews.AcceptCallView;
   var DesktopPendingConversationView = loop.conversationViews.PendingConversationView;
   var OngoingConversationView = loop.conversationViews.OngoingConversationView;
-  var GenericFailureView = loop.conversationViews.GenericFailureView;
+  var FailureView = loop.conversationViews.FailureView;
   var DesktopRoomConversationView = loop.roomViews.DesktopRoomConversationView;
 
   // 2. Standalone webapp
@@ -1069,13 +1069,13 @@
             </FramedExample>
           </Section>
 
-          <Section name="GenericFailureView">
+          <Section name="FailureView">
             <FramedExample dashed={true}
                            height={272}
-                           summary="GenericFailureView"
+                           summary="FailureView"
                            width={300}>
               <div className="fx-embedded">
-                <GenericFailureView dispatcher={dispatcher} />
+                <FailureView dispatcher={dispatcher} />
               </div>
             </FramedExample>
           </Section>

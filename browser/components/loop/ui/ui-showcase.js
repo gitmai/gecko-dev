@@ -26,7 +26,7 @@
   var AcceptCallView = loop.conversationViews.AcceptCallView;
   var DesktopPendingConversationView = loop.conversationViews.PendingConversationView;
   var OngoingConversationView = loop.conversationViews.OngoingConversationView;
-  var GenericFailureView = loop.conversationViews.GenericFailureView;
+  var FailureView = loop.conversationViews.FailureView;
   var DesktopRoomConversationView = loop.roomViews.DesktopRoomConversationView;
 
   // 2. Standalone webapp
@@ -1069,13 +1069,13 @@
             )
           ), 
 
-          React.createElement(Section, {name: "GenericFailureView"}, 
+          React.createElement(Section, {name: "FailureView"}, 
             React.createElement(FramedExample, {dashed: true, 
                            height: 272, 
-                           summary: "GenericFailureView", 
+                           summary: "FailureView", 
                            width: 300}, 
               React.createElement("div", {className: "fx-embedded"}, 
-                React.createElement(GenericFailureView, {dispatcher: dispatcher})
+                React.createElement(FailureView, {dispatcher: dispatcher})
               )
             )
           ), 

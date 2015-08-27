@@ -314,7 +314,7 @@ loop.conversationViews = (function(mozL10n) {
   /**
    * Something went wrong view. Displayed when there's a big problem.
    */
-  var GenericFailureView = React.createClass({displayName: "GenericFailureView",
+  var FailureView = React.createClass({displayName: "FailureView",
     mixins: [
       Backbone.Events,
       loop.store.StoreMixin("conversationStore"),
@@ -673,7 +673,7 @@ loop.conversationViews = (function(mozL10n) {
           return null;
         }
         case CALL_STATES.TERMINATED: {
-          return (React.createElement(GenericFailureView, {
+          return (React.createElement(FailureView, {
             contact: this.state.contact, 
             dispatcher: this.props.dispatcher}));
         }
@@ -711,7 +711,7 @@ loop.conversationViews = (function(mozL10n) {
     CallIdentifierView: CallIdentifierView,
     ConversationDetailView: ConversationDetailView,
     _getContactDisplayName: _getContactDisplayName,
-    GenericFailureView: GenericFailureView,
+    FailureView: FailureView,
     AcceptCallView: AcceptCallView,
     OngoingConversationView: OngoingConversationView,
     CallControllerView: CallControllerView

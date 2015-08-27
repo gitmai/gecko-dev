@@ -427,7 +427,7 @@ describe("loop.conversationViews", function () {
       expect(fakeWindow.document.title).eql("fakeId");
     });
 
-    it("should render the GenericFailureView when the call state is 'terminated'",
+    it("should render the FailureView when the call state is 'terminated'",
       function() {
         conversationStore.setStoreState({
           callState: CALL_STATES.TERMINATED,
@@ -437,7 +437,7 @@ describe("loop.conversationViews", function () {
         view = mountTestComponent();
 
         TestUtils.findRenderedComponentWithType(view,
-          loop.conversationViews.GenericFailureView);
+          loop.conversationViews.FailureView);
     });
 
     it("should render the PendingConversationView for outgoing calls when the call state is 'gather'",
@@ -504,7 +504,7 @@ describe("loop.conversationViews", function () {
           loop.conversationViews.PendingConversationView);
         conversationStore.setStoreState({callState: CALL_STATES.TERMINATED});
         TestUtils.findRenderedComponentWithType(view,
-          loop.conversationViews.GenericFailureView);
+          loop.conversationViews.FailureView);
     });
 
     it("should call onCallTerminated when the call is finished", function() {
@@ -691,12 +691,12 @@ describe("loop.conversationViews", function () {
     });
   });
 
-  describe("GenericFailureView", function() {
+  describe("FailureView", function() {
     var callView, fakeAudio;
-
+    var fakeContact = {email: [{value: "test@test.tld"}]};
     function mountTestComponent(props) {
       return TestUtils.renderIntoDocument(
-        React.createElement(loop.conversationViews.GenericFailureView, props));
+        React.createElement(loop.conversationViews.FailureView, props));
     }
 
     beforeEach(function() {
@@ -752,6 +752,117 @@ describe("loop.conversationViews", function () {
 
         expect(callView.getDOMNode().querySelector("h2").textContent)
           .eql("generic_failure_title");
-     });
-  });
+    });
+
+    it("should dispatch a rejoin action when the rejoin button is pressed",
+      function() {
+        view = mountTestComponent({dispatcher: dispatcher});
+
+        var rejoinBtn = view.getDOMNode().querySelector(".btn-rejoin");
+
+        React.addons.TestUtils.Simulate.click(rejoinBtn);
+
+        sinon.assert.calledOnce(dispatcher.dispatch);
+        sinon.assert.calledWithMatch(dispatcher.dispatch,
+          sinon.match.hasOwn("name", "retryCall"));
+      });
+
+    it("should show 'something went wrong' when the reason is WEBSOCKET_REASONS.MEDIA_FAIL",
+      function () {
+        conversationStore.setStoreState({callStateReason: WEBSOCKET_REASONS.MEDIA_FAIL});
+
+        view = mountTestComponent({dispatcher: dispatcher});
+
+        sinon.assert.calledWith(document.mozL10n.get, "generic_failure_title");
+      });
+
+    it("should show 'contact unavailable' when the reason is WEBSOCKET_REASONS.REJECT",
+      function () {
+        conversationStore.setStoreState({callStateReason: WEBSOCKET_REASONS.REJECT});
+
+        view = mountTestComponent({
+          contact: fakeContact,
+          dispatcher: dispatcher
+        });
+
+        sinon.assert.calledWithExactly(document.mozL10n.get,
+          "contact_unavailable_title",
+          {contactName: loop.conversationViews
+                            ._getContactDisplayName(fakeContact)});
+      });
+
+    it("should show 'contact unavailable' when the reason is WEBSOCKET_REASONS.BUSY",
+      function () {
+        conversationStore.setStoreState({callStateReason: WEBSOCKET_REASONS.BUSY});
+
+        view = mountTestComponent({
+          contact: fakeContact,
+          dispatcher: dispatcher
+        });
+
+        sinon.assert.calledWithExactly(document.mozL10n.get,
+          "contact_unavailable_title",
+          {contactName: loop.conversationViews
+                            ._getContactDisplayName(fakeContact)});
+      });
+
+    it("should show 'something went wrong' when the reason is 'setup'",
+      function () {
+        conversationStore.setStoreState({callStateReason: "setup"});
+
+        view = mountTestComponent({
+          contact: fakeContact,
+          dispatcher: dispatcher
+        });
+
+        sinon.assert.calledWithExactly(document.mozL10n.get,
+          "generic_failure_title");
+      });
+
+    it("should show 'contact unavailable' when the reason is FAILURE_DETAILS.USER_UNAVAILABLE",
+      function () {
+        conversationStore.setStoreState({callStateReason: FAILURE_DETAILS.USER_UNAVAILABLE});
+
+        view = mountTestComponent({
+          contact: fakeContact,
+          dispatcher: dispatcher
+        });
+
+        sinon.assert.calledWithExactly(document.mozL10n.get,
+          "contact_unavailable_title",
+          {contactName: loop.conversationViews
+                            ._getContactDisplayName(fakeContact)});
+      });
+
+    it("should show 'no media' when the reason is FAILURE_DETAILS.UNABLE_TO_PUBLISH_MEDIA",
+      function () {
+        conversationStore.setStoreState({callStateReason: FAILURE_DETAILS.UNABLE_TO_PUBLISH_MEDIA});
+
+        view = mountTestComponent({
+          contact: fakeContact,
+          dispatcher: dispatcher
+        });
+
+        sinon.assert.calledWithExactly(document.mozL10n.get, "no_media_failure_message");
+      });
+
+    it("should display a generic contact unavailable msg when the reason is" +
+       " WEBSOCKET_REASONS.BUSY and no display name is available", function() {
+        conversationStore.setStoreState({callStateReason: WEBSOCKET_REASONS.BUSY});
+        var phoneOnlyContact = {
+          tel: [{"pref": true, type: "work", value: ""}]
+        };
+
+        view = mountTestComponent({
+          contact: phoneOnlyContact,
+          dispatcher: dispatcher
+        });
+
+        sinon.assert.calledWith(document.mozL10n.get,
+          "generic_contact_unavailable_title");
+    });
+
+
+
+   });
 });

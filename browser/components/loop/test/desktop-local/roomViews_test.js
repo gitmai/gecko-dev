@@ -444,24 +444,24 @@ describe("loop.roomViews", function () {
         expect(fakeWindow.document.title).to.equal("fakeName");
       });
 
-      it("should render the GenericFailureView if the roomState is `FAILED`",
+      it("should render the FailureView if the roomState is `FAILED`",
         function() {
           activeRoomStore.setStoreState({roomState: ROOM_STATES.FAILED});
 
           view = mountTestComponent();
 
           TestUtils.findRenderedComponentWithType(view,
-            loop.conversationViews.GenericFailureView);
+            loop.conversationViews.FailureView);
         });
 
-      it("should render the GenericFailureView if the roomState is `FULL`",
+      it("should render the FailureView if the roomState is `FULL`",
         function() {
           activeRoomStore.setStoreState({roomState: ROOM_STATES.FULL});
 
           view = mountTestComponent();
 
           TestUtils.findRenderedComponentWithType(view,
-            loop.conversationViews.GenericFailureView);
+            loop.conversationViews.FailureView);
         });
 
       it("should render the DesktopRoomInvitationView if roomState is `JOINED`",

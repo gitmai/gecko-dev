@@ -713,7 +713,7 @@ loop.roomViews = (function(mozL10n) {
           // Note: While rooms are set to hold a maximum of 2 participants, the
           //       FULL case should never happen on desktop.
           return (
-            <loop.conversationViews.GenericFailureView
+            <loop.conversationViews.FailureView
               dispatcher={this.props.dispatcher}
               failureReason={this.state.failureReason} />
           );

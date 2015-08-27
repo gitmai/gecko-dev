@@ -214,13 +214,13 @@ describe("loop.conversation", function() {
         loop.roomViews.DesktopRoomConversationView);
     });
 
-    it("should display the GenericFailureView for failures", function() {
+    it("should display the FailureView for failures", function() {
       conversationAppStore.setStoreState({windowType: "failed"});
 
       ccView = mountTestComponent();
 
       TestUtils.findRenderedComponentWithType(ccView,
-        loop.conversationViews.GenericFailureView);
+        loop.conversationViews.FailureView);
     });
 
     it("should set the correct title when rendering feedback view", function() {
